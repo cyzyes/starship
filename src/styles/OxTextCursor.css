@@ -1,0 +1,105 @@
+.use-ox-text-cursor,
+.use-ox-text-cursor * {
+  cursor: none !important;
+}
+
+.ox-imprints-root {
+  position: fixed;
+  inset: 0;
+  z-index: 10058;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/**
+ * Imprint typography — switch spacing ≈ this box width (JS uses gauge getBoundingClientRect().width × 1.02).
+ */
+.ox-imprint {
+  position: fixed;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  width: fit-content;
+  min-width: 1em;
+  min-height: 1em;
+  padding: calc(1em / 14) calc(1em / 10);
+  display: grid;
+  place-items: center;
+  transform: translate(-50%, -52%);
+  line-height: 1.06;
+  /* Centre-to-centre spacing along stroke ≈ imprint box width (~1 glyph) */
+  letter-spacing: normal;
+  font-variant-east-asian: normal;
+  white-space: nowrap;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    "PingFang SC",
+    "Noto Sans SC",
+    "Microsoft YaHei",
+    sans-serif;
+  font-size: clamp(24px, 3.45vw, 30px);
+  font-weight: 700;
+  color: rgba(243, 218, 254, 0.42);
+  text-shadow:
+    0 0 1px rgba(28, 13, 38, 0.9),
+    0 0 10px rgba(255, 0, 255, 0.16),
+    0 0 16px rgba(0, 251, 251, 0.12);
+  user-select: none;
+  opacity: 0.46;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ox-imprint {
+    opacity: 0.35;
+  }
+}
+
+/** Invisible sizing probe — inherits .ox-imprint metrics (~1‑glyph step along path) */
+.ox-imprint.ox-imprint--gauge {
+  visibility: hidden;
+  left: -8000px;
+  top: 0;
+  padding: calc(1em / 14) calc(1em / 10);
+}
+
+.ox-text-cursor {
+  position: fixed;
+  left: -200px;
+  top: -200px;
+  z-index: 10060;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.ox-text-cursor__ox {
+  display: block;
+  filter: drop-shadow(0 0 8px rgba(255, 0, 255, 0.8)) drop-shadow(0 0 4px rgba(0, 251, 251, 0.6));
+}
+
+.ox-text-cursor__char {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1em;
+  min-height: 1em;
+  box-sizing: border-box;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    "PingFang SC",
+    "Noto Sans SC",
+    "Microsoft YaHei",
+    sans-serif;
+  /** 与烙印同比例：略偏大以便跟手更清晰 */
+  font-size: clamp(28px, 4.05vw, 34px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffabf3;
+  text-shadow:
+    0 0 12px #ff00ff,
+    0 0 6px #00fbfb,
+    1px 1px 0 #510051;
+  user-select: none;
+}

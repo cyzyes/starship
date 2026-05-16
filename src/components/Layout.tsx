@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { CometCursor } from "@/components/CometCursor";
+import { OxTextCursor } from "@/components/OxTextCursor";
 import { SpaceshipLogo } from "@/components/SpaceshipLogo";
 import { VaporBackdrop } from "@/components/VaporBackdrop";
 
@@ -20,7 +20,7 @@ function NavIcon({ name }: { name: string }) {
 export function Layout() {
   return (
     <>
-      <CometCursor />
+      <OxTextCursor />
       <VaporBackdrop />
 
       <header className="site-header">
