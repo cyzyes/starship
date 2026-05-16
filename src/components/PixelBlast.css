@@ -1,0 +1,14 @@
+/* Styles for PixelBlast canvas container (paired with bits.tsx — keep in sync with class name there) */
+
+.pixel-blast-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.pixel-blast-container canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
