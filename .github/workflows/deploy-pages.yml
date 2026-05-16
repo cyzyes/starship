@@ -1,5 +1,8 @@
 # Build Vite bundle and publish to GitHub Pages (fixes white screen from raw `/src/*.tsx`).
 # Repo → Settings → Pages → Source: GitHub Actions
+#
+# Duplicate default artifact name "github-pages" in one run can break deploy-pages; use a
+# unique artifact name per run (see github.com/actions/upload-pages-artifact/issues/97).
 name: Deploy GitHub Pages
 
 on:
@@ -12,9 +15,13 @@ permissions:
   pages: write
   id-token: write
 
+# One deployment at a time; drop stale in-flight workflows on new pushes.
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: "pages-${{ github.repository }}"
+  cancel-in-progress: true
+
+env:
+  PAGES_ARTIFACT_NAME: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
 
 jobs:
   build:
@@ -40,8 +47,9 @@ jobs:
         run: cp dist/index.html dist/404.html
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
+          name: ${{ env.PAGES_ARTIFACT_NAME }}
           path: dist
 
   deploy:
@@ -54,3 +62,5 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: ${{ env.PAGES_ARTIFACT_NAME }}
